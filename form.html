@@ -147,6 +147,11 @@
             <input type="email" id="email" placeholder="ex: abc@gmail.com">
         </div>
         <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create your password">
+            <div id="password-strength-message"></div>
+        </div>
+        <div class="form-group">
             <label for="skills">SKILLS & EXPERTISE</label>
             <input type="text" id="skills" placeholder="Enter your skills here">
         </div>
@@ -162,6 +167,7 @@
             <label for="github">GITHUB LINK</label>
             <input type="url" id="github" placeholder="Attach your Github link">
         </div>
+        
         <div class="form-group">
             <label for="linkedin">LINKEDIN PROFILE LINK</label>
             <input type="url" id="linkedin" placeholder="Attach your Linkedin Profile Link">
@@ -199,6 +205,38 @@
         document.querySelector('.submit-btn').addEventListener('click', () => {
             alert('Form submitted successfully!');
         });
+
+
+        document.getElementById('password').addEventListener('input', function() {
+    const password = this.value;
+    const strengthMessage = document.getElementById('password-strength-message');
+    const strength = checkPasswordStrength(password);
+    
+    if (strength === 'Weak') {
+        strengthMessage.textContent = 'Password is too weak. Use a mix of letters, numbers, and symbols.';
+    } else if (strength === 'Medium') {
+        strengthMessage.textContent = 'Password is medium. Consider adding more variety.';
+    } else if (strength === 'Strong') {
+        strengthMessage.textContent = 'Password is strong.';
+        strengthMessage.style.color = 'green';
+    }
+});
+
+function checkPasswordStrength(password) {
+    const regexWeak = /^(?=.*[a-zA-Z0-9]).{6,}$/;  // At least 6 characters (letters and numbers)
+    const regexMedium = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;  // Letters, numbers, and symbols
+    const regexStrong = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{12,}$/;  // Uppercase, lowercase, numbers, symbols
+    
+    if (regexStrong.test(password)) {
+        return 'Strong';
+    } else if (regexMedium.test(password)) {
+        return 'Medium';
+    } else if (regexWeak.test(password)) {
+        return 'Weak';
+    }
+    return '';
+}
+
     </script>
 </body>
 </html>
