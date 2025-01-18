@@ -101,9 +101,7 @@ body {
     font-weight: bold;
     
 }
-.in{
-    outline:0;
-}
+
 form {
     display: flex;
     flex-direction: column;
