@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f2f0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding-top: 20px;
+        }
+
+        .form-container {
+            width: 500px;
+            background-color: #cec2ad;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .form-container h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #4a403a;
+        }
+
+        .upload-section {
+            margin-bottom: 20px;
+        }
+
+        .upload-section label {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background-color: #4a403a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .upload-section input {
+            display: none;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: #4a403a;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 0.9rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f5f1;
+            outline: 0;
+        }
+
+        .form-group textarea {
+            resize: none;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form-actions button {
+            width: 48%;
+            padding: 10px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #4a403a;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-actions a button {
+            width: 250px;
+            padding: 10px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: #4a403a;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+
+
+        .form-actions button:hover {
+            background-color: #3b342e;
+        }
+
+        .preview-img {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto;
+            border-radius: 50%;
+            object-fit: cover;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>REGISTRATION FORM</h1>
+        <div class="upload-section">
+            <label for="profile-photo">Click to Upload</label>
+            <input type="file" id="profile-photo" accept="image/*">
+            <img id="preview-image" class="preview-img" alt="Preview">
+        </div>
+        <div class="form-group">
+            <label for="name">NAME</label>
+            <input type="text" id="name" placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+            <label for="contact">CONTACT NO</label>
+            <input type="tel" id="contact" placeholder="Enter your contact no.">
+        </div>
+        <div class="form-group">
+            <label for="email">EMAIL ID</label>
+            <input type="email" id="email" placeholder="ex: abc@gmail.com">
+        </div>
+        <div class="form-group">
+            <label for="skills">SKILLS & EXPERTISE</label>
+            <input type="text" id="skills" placeholder="Enter your skills here">
+        </div>
+        <div class="form-group">
+            <label for="description">PERSONAL DESCRIPTION</label>
+            <textarea id="description" rows="3" placeholder="Write about your qualifications, experience (if any),achievements etc."></textarea>
+        </div>
+        <div class="form-group">
+            <label for="links">PROJECT LINKS</label>
+            <input type="url" id="links" placeholder="Attach your projects link here">
+        </div>
+        <div class="form-group">
+            <label for="github">GITHUB LINK</label>
+            <input type="url" id="github" placeholder="Attach your Github link">
+        </div>
+        <div class="form-group">
+            <label for="linkedin">LINKEDIN PROFILE LINK</label>
+            <input type="url" id="linkedin" placeholder="Attach your Linkedin Profile Link">
+        </div>
+        <div class="form-actions">
+            <a href="index.html"><button class="cancel-btn">CANCEL</button></a>
+            <button class="submit-btn">SUBMIT</button>
+        </div>
+    </div>
+
+    <script>
+        const profilePhotoInput = document.getElementById('profile-photo');
+        const profilePhotoLabel = document.querySelector('.upload-section label');
+        const previewImage = document.getElementById('preview-image');
+
+        profilePhotoInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    previewImage.style.display = 'block';
+                    profilePhotoLabel.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.querySelector('.cancel-btn').addEventListener('click', () => {
+            document.querySelectorAll('input, textarea').forEach(input => input.value = '');
+            previewImage.style.display = 'none';
+            profilePhotoLabel.style.display = 'flex';
+        });
+
+        document.querySelector('.submit-btn').addEventListener('click', () => {
+            alert('Form submitted successfully!');
+        });
+    </script>
+</body>
+</html>
