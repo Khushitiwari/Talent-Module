@@ -21,7 +21,7 @@ Table Of Contents :-
 -  Features
 -  Usages
 -  Licences
--  Contact
+
 
 
 1. Introduction
