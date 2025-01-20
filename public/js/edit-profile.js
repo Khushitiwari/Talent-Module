@@ -270,9 +270,8 @@ async function saveProfileChanges() {
             })
         };
 
-        if (!formData.userName) throw new Error('Name is required');
-        if (!formData.userEmail) throw new Error('Email is required');
-
+        console.log('Profile photo URL:', formData.profilePhoto);
+        console.log('Profile photo URL:', formData.profilePhoto);
         const response = await fetch('http://localhost:3000/api/profile', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
