@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const path = require('path');
 
 // Constants
 const PORT = process.env.PORT || 3000;
@@ -56,28 +58,16 @@ const validateProfileData = (data) => {
     }
 };
 
-// Initialize profile data
-let profileData = {
-    id: "usr_001",
-    userName: "John",
-    lastName: "Doe",
-    userPhone: "+1 (555) 123-4567",
-    userEmail: "john.doe@example.com",
-    userSkills: "JavaScript, Python, React, Node.js, SQL, AWS, Docker, Git",
-    userDescription: "Senior Full Stack Developer with 5+ years of experience in building scalable web applications. Passionate about clean code and modern technologies.",
-    profilePhoto: DEFAULT_PHOTO,
-    educationContainer: [],
-    experienceContainer: [],
-    projectsContainer: [],
-    socialMediaContainer: []
-};
-
 // Helper function to sanitize arrays
 const sanitizeArray = (arr) => Array.isArray(arr) ? arr : [];
+
+// Profile File Path
+const profileFilePath = path.join(__dirname, 'profileData.json');
 
 // Profile Routes
 app.get('/api/profile', (req, res, next) => {
     try {
+        const profileData = JSON.parse(fs.readFileSync(profileFilePath, 'utf-8'));
         res.json({
             success: true,
             data: profileData
@@ -95,6 +85,9 @@ app.post('/api/profile', (req, res, next) => {
         // Validate input data
         validateProfileData(data);
 
+        // Read current profile data from JSON file
+        let profileData = JSON.parse(fs.readFileSync(profileFilePath, 'utf-8'));
+
         // Update profile data with sanitization
         profileData = {
             ...profileData,
@@ -111,8 +104,10 @@ app.post('/api/profile', (req, res, next) => {
             socialMediaContainer: sanitizeArray(data.socialMediaContainer)
         };
 
+        // Write updated profile data back to JSON file
+        fs.writeFileSync(profileFilePath, JSON.stringify(profileData, null, 2));
+
         console.log('Profile updated successfully');
-        
         res.json({
             success: true,
             message: 'Profile updated successfully',
